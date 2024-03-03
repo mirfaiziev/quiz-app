@@ -1,24 +1,22 @@
+import Answers from "@/components/custom/Answers";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+
+const QuestionAnsewer = {
+  question: "How important is love and relationships in your life?",
+  answers: [
+      {text: "Love and relationships are my top priorities! ❤️"},
+      {text: "Important, but I also value personal growth 😊"},
+      {text: "It varies depending on the situation 🤷‍♀️"},
+      {text: "Not a top priority for me 🚫"}
+  ]
+}
 
 export default function Home() {
   return (
     <section>
-      <h1 className="quiz-question">Question</h1>
-      <div>
-          <Button
-                  type="submit"
-                  className="rounded
-                      w-full sm:w-1/2
-                      p-6 py-3 my-2 h-24
-                      bg-slate-100
-                      hover:border-2 hover:border-indigo-500 hover:bg-slate-100
-                      text-md sm:text-lg
-                      "
-        
-          >Answer</Button>
-          <br/>
-      </div>
+      <h1 className="quiz-question">{QuestionAnsewer.question}</h1>
+      <Answers answers={QuestionAnsewer.answers}/>
     </section>
   );
 }
