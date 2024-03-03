@@ -74,3 +74,29 @@
     @apply bg-background text-foreground;
   }
 }
+
+h1.quiz-question {
+  @apply text-3xl;
+  @apply pb-10;
+}
+
+body {
+  @apply font-sans;
+    @apply mt-14;
+    height: 1000px;
+}
+
+header.site-header {
+    @apply bg-white;
+    @apply py-4;
+    @apply fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+h1.header-h1{
+    @apply text-3xl;
+    @apply font-bold;
+}
