@@ -5,6 +5,8 @@
 import { Quizes } from "@/data/quiz";
 import { IQuestion, IQuiz, IQuizes } from "./interfaces";
 
+// todo: move it to env
+const BASE_URL = "/"
 
 // transform string to slug
 function slugify(input?: string, words?: number): string {
@@ -67,18 +69,32 @@ export function getQuestionBySlug(quiz:IQuiz, quiestionSlug: string): IQuestion|
   return quiz.questions[index]
 }
 
+export function getNextQuestionSlug(quiz:IQuiz, quiestionSlug: string) : string {
+  const index = getQuestionIndexBySlug(quiestionSlug)
+  if (index === null) {
+    return getFullUrl("result")
+  }
+
+  if (quiz.questions[index+1] === undefined) {
+    return getFullUrl("result")
+  }
+
+  const url = getUrlByQuestionIndex(quiz, index+1)
+  if (!url) {
+    return getFullUrl("result")
+  }
+
+  return getFullUrl(url)
+}
+
+export function getFullUrl(path:string):string{
+  return BASE_URL + path
+}
+
 function getQuestionIndexBySlug(questionSlug: string): number | null {
   const index = parseInt(questionSlug.split('-')[0])
   if (isNaN(index)) {
     return null
   }
   return index - 1
-}
-
-export function isValidQuizSlug(quiz:IQuiz, quizSlug: string): boolean {
-  if (quiz.slug != quizSlug.toLowerCase()) {
-    return false
-  } 
-
-  return true
 }

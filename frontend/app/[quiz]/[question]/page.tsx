@@ -1,5 +1,5 @@
 import Question from "@/components/custom/Question"
-import { getQuestionBySlug, getQuizBySlug } from "@/lib/url"
+import { getNextQuestionSlug, getQuestionBySlug, getQuizBySlug } from "@/lib/url"
 import { notFound } from "next/navigation"
 
 interface QuestionPageParams{
@@ -17,8 +17,9 @@ export default function QuestionPage({params}: {params: QuestionPageParams}) {
     return notFound()
   }
 
-  return (
-    <Question question={question} />
-  )
+  const nextQuestionSlug = getNextQuestionSlug(quiz, params.question)
 
+  return (
+    <Question question={question} nextSlug={nextQuestionSlug}/>
+  )
 }

@@ -1,11 +1,22 @@
+'use client'
+
 import { IAnswer } from "@/lib/interfaces"
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 interface AnswersProps {
-  answers: Array<IAnswer>
+  answers: Array<IAnswer>,
+  nextSlug: string
 }
 
-const Answers = ({answers}: AnswersProps) => {
+
+
+const Answers = ({answers, nextSlug}: AnswersProps) => {
+  const router = useRouter();
+
+  const onClick = (event: React.MouseEvent<HTMLElement>) => {
+    router.push(event.currentTarget.dataset.nextSlug || '/')
+  }
   return (
     <div>
         {answers.map((answer, index) => (
@@ -19,6 +30,8 @@ const Answers = ({answers}: AnswersProps) => {
                       hover:border-2 hover:border-indigo-500 hover:bg-slate-100
                       text-md sm:text-lg
                       "
+                  onClick={onClick}
+                  data-next-slug={nextSlug}
           >{answer.text}</Button>
           <br/>
         </div>
