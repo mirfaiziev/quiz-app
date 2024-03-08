@@ -1,22 +1,42 @@
 'use client'
 
-import { IAnswer } from "@/lib/interfaces"
+import { IAnswer } from "@/lib/data";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
+import { storeAnswer } from "@/lib/storage";
 
 interface AnswersProps {
   answers: Array<IAnswer>,
-  nextSlug: string
+  nextSlug: string|boolean,
+  questionIndex: number,
+  isFinalQuestion: boolean,
 }
 
-
-
-const Answers = ({answers, nextSlug}: AnswersProps) => {
+const Answers = ({answers, nextSlug, questionIndex, isFinalQuestion}: AnswersProps) => {
   const router = useRouter();
 
   const onClick = (event: React.MouseEvent<HTMLElement>) => {
-    router.push(event.currentTarget.dataset.nextSlug || '/')
+    const dataset = event.currentTarget.dataset
+    const answerIndex = dataset.answerIndex 
+
+    if (answerIndex === undefined) {
+      return notFound()
+    }
+
+    const storeResult = storeAnswer(questionIndex, parseInt(answerIndex))
+    if (storeResult === false) {
+      console.log("cannot store result")
+    }
+
+    if (isFinalQuestion) {
+      router.push('result')
+      return
+    }
+
+    router.push(dataset.nextSlug || '/')
+    return
   }
+
   return (
     <div>
         {answers.map((answer, index) => (
@@ -32,6 +52,7 @@ const Answers = ({answers, nextSlug}: AnswersProps) => {
                       "
                   onClick={onClick}
                   data-next-slug={nextSlug}
+                  data-answer-index={index}
           >{answer.text}</Button>
           <br/>
         </div>

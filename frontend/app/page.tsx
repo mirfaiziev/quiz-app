@@ -1,11 +1,22 @@
+'use client'
+
+import { initLocalStorage } from "@/lib/storage"
 import { getStartUrl } from "@/lib/url"
+import { notFound, redirect } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Home() {
-  // todo: init local storage
-  // todo: redirect to active quiz
+  useEffect(() => {
+    const startUrl = getStartUrl()
+    if (!startUrl) {
+      return notFound()
+    }
+
+    initLocalStorage()
+    redirect(startUrl)  
+  }, [])
+  
   return (
-    <section>
-      <a href={`/${getStartUrl()}`}>Go</a>
-    </section>
+    <></>
   )
 }

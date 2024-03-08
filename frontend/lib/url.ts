@@ -2,8 +2,7 @@
  * functions works with urls
  */
 
-import { Quizes } from "@/data/quiz";
-import { IQuestion, IQuiz, IQuizes } from "./interfaces";
+import { IQuiz, getDefaultQuiz, getQuestionIndexBySlug } from "./data";
 
 // todo: move it to env
 const BASE_URL = "/"
@@ -33,55 +32,33 @@ function slugify(input?: string, words?: number): string {
 }
 
 export function getStartUrl(): string|null {
-  const defaultQuiz = Quizes.filter((quiz:IQuiz) => {return quiz.default === true})[0] 
+  const defaultQuiz = getDefaultQuiz()
   return getUrlByQuestionIndex(defaultQuiz, 0)
 }
+
 
 export function getUrlByQuestionIndex(quiz:IQuiz, index: number) : string|null {
   if (quiz.questions[index] === undefined) {
     return null
   }
 
-  return quiz.slug+"/"+(index+1)+"-"+slugify(quiz.questions[index].question);
+  return quiz.slug+"/"+getQuestionSlugByIndexAndContent(index, quiz.questions[index].question)
 }
 
-export function getQuizBySlug(slug:string): IQuiz|null {
-  const quiz = Quizes.filter((quiz:IQuiz) => {return quiz.slug === slug.toLowerCase()})
-
-  if (quiz.length !== 1) {
-    return null
-  }
-
-  return quiz[0]
+export function getQuestionSlugByIndexAndContent(index:number, content:string): string {
+  return (index+1)+"-"+slugify(content)
 }
 
 
-export function getQuestionBySlug(quiz:IQuiz, quiestionSlug: string): IQuestion|null {
-  const index = getQuestionIndexBySlug(quiestionSlug)
+export function getNextQuestionSlug(quiz:IQuiz, currentQuiestionSlug: string) : string|boolean|null {
+  const index = getQuestionIndexBySlug(currentQuiestionSlug)
   if (index === null) {
     return null
-  }
-
-  if (quiz.questions[index] === undefined) {
-    return null
-  }
-
-  return quiz.questions[index]
-}
-
-export function getNextQuestionSlug(quiz:IQuiz, quiestionSlug: string) : string {
-  const index = getQuestionIndexBySlug(quiestionSlug)
-  if (index === null) {
-    return getFullUrl("result")
-  }
-
-  if (quiz.questions[index+1] === undefined) {
-    return getFullUrl("result")
   }
 
   const url = getUrlByQuestionIndex(quiz, index+1)
   if (!url) {
-    return getFullUrl("result")
+    return false
   }
 
   return getFullUrl(url)
@@ -89,12 +66,4 @@ export function getNextQuestionSlug(quiz:IQuiz, quiestionSlug: string) : string 
 
 export function getFullUrl(path:string):string{
   return BASE_URL + path
-}
-
-function getQuestionIndexBySlug(questionSlug: string): number | null {
-  const index = parseInt(questionSlug.split('-')[0])
-  if (isNaN(index)) {
-    return null
-  }
-  return index - 1
 }
