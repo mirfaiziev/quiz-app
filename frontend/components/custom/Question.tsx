@@ -5,10 +5,9 @@ interface QuestionProps {
   question: IQuestion,
   nextSlug: string|boolean,
   questionIndex: number,
-  isFinalQuestion: boolean
 }
 
-const Question = ({question, nextSlug, questionIndex, isFinalQuestion}:QuestionProps) => {
+const Question = ({question, nextSlug, questionIndex}:QuestionProps) => {
   return (
     <section>
       <h1 className="quiz-question">{question.question}</h1>
@@ -16,7 +15,6 @@ const Question = ({question, nextSlug, questionIndex, isFinalQuestion}:QuestionP
         answers={question.answers} 
         nextSlug={nextSlug} 
         questionIndex={questionIndex} 
-        isFinalQuestion={isFinalQuestion}
       />
     </section>
   )

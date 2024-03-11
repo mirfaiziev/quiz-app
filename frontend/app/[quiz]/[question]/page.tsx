@@ -34,18 +34,11 @@ export default function QuestionPage({params}: {params: QuestionPageParams}) {
     return notFound()
   }
 
-  let isFinalQuestion=false
-
-  if (nextQuestionSlug === false) {
-    isFinalQuestion=true
-  } 
-
   return (
     <Question 
       question={question} 
       nextSlug={nextQuestionSlug} 
       questionIndex={questionIndex}
-      isFinalQuestion={isFinalQuestion}
     />
   )
 }

@@ -4,9 +4,6 @@
 
 import { IQuiz, getDefaultQuiz, getQuestionIndexBySlug } from "./data";
 
-// todo: move it to env
-const BASE_URL = "/"
-
 // transform string to slug
 function slugify(input?: string, words?: number): string {
   if (!input)
@@ -42,7 +39,16 @@ export function getUrlByQuestionIndex(quiz:IQuiz, index: number) : string|null {
     return null
   }
 
-  return quiz.slug+"/"+getQuestionSlugByIndexAndContent(index, quiz.questions[index].question)
+  return getQuizUrl(quiz, getQuestionSlugByIndexAndContent(index, quiz.questions[index].question))
+}
+
+// get the URL belongs to quiz
+function getQuizUrl(quiz:IQuiz, path:string | null | undefined): string {
+  if (path === null || path === undefined) {
+    return quiz.slug
+  }
+
+  return quiz.slug+"/"+path
 }
 
 export function getQuestionSlugByIndexAndContent(index:number, content:string): string {
@@ -58,12 +64,12 @@ export function getNextQuestionSlug(quiz:IQuiz, currentQuiestionSlug: string) : 
 
   const url = getUrlByQuestionIndex(quiz, index+1)
   if (!url) {
-    return false
+    return getFullUrl(getQuizUrl(quiz, process.env.APP_FINAL_ROUTE || '/'))
   }
 
   return getFullUrl(url)
 }
 
 export function getFullUrl(path:string):string{
-  return BASE_URL + path
+  return process.env.APP_BASE_URL + path
 }

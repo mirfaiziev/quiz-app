@@ -9,10 +9,9 @@ interface AnswersProps {
   answers: Array<IAnswer>,
   nextSlug: string|boolean,
   questionIndex: number,
-  isFinalQuestion: boolean,
 }
 
-const Answers = ({answers, nextSlug, questionIndex, isFinalQuestion}: AnswersProps) => {
+const Answers = ({answers, nextSlug, questionIndex}: AnswersProps) => {
   const router = useRouter();
 
   const onClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,11 +25,6 @@ const Answers = ({answers, nextSlug, questionIndex, isFinalQuestion}: AnswersPro
     const storeResult = storeAnswer(questionIndex, parseInt(answerIndex))
     if (storeResult === false) {
       console.log("cannot store result")
-    }
-
-    if (isFinalQuestion) {
-      router.push('result')
-      return
     }
 
     router.push(dataset.nextSlug || '/')
