@@ -43,7 +43,7 @@ export function getUrlByQuestionIndex(quiz:IQuiz, index: number) : string|null {
 }
 
 // get the URL belongs to quiz
-function getQuizUrl(quiz:IQuiz, path:string | null | undefined): string {
+function getQuizUrl(quiz:IQuiz, path:string | null | undefined): string { 
   if (path === null || path === undefined) {
     return quiz.slug
   }

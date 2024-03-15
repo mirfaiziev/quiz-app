@@ -2,10 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import getRawBody from "raw-body";
-const stripe = new Stripe( process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion:"2023-10-16"
-})
-
+import {stripe} from "@/lib/payment"
+import { markPaymentPaid } from "@/lib/paymentLog";
 
 async function GET(request: NextApiRequest) {
 	return new Response("Method Not Allowed", {status: 405})
@@ -62,13 +60,16 @@ async function POST(
 
       try {
         // Save the data, change customer account info, etc
-        console.log("Fullfill the order with custom logic");
-        console.log("data", lineItems.data);
-        console.log(
-          "customer email",
-          (event.data.object as any).customer_details.email
-        );
-        console.log("created", (event.data.object as any).created);
+        // console.log("Fullfill the order with custom logic");
+        // console.log("data", lineItems.data);
+        // console.log(
+        //   "customer email",
+        //   (event.data.object as any).customer_details.email
+        // );
+        // console.log("created", (event.data.object as any).created);
+        const dataObject = (event.data.object as any)
+        markPaymentPaid(dataObject.client_reference_id, dataObject.customer_details.email)
+
       } catch (error) {
         console.log("Handling when you're unable to save an order");
       }

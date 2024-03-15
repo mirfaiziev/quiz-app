@@ -1,6 +1,12 @@
-export default function SuccessPage() {
-  return (<section>
-    <h1>Success!</h1>
-    waiting for the payment...
-    </section>)
+import Success from "@/components/custom/Success"
+
+interface SearchParams {
+  token: string
+}
+
+export default function SuccessPage({searchParams} : {searchParams: SearchParams}) {
+  // todo: get read of token in url, set it in cookie
+  return (
+    <Success token={searchParams.token} />
+  )
 }
