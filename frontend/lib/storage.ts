@@ -18,7 +18,7 @@ export function initLocalStorage() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj))
 }
 
-export function storeAnswer(questionIndex:number, answerIndex:number):boolean {
+export function storeAnswer(questionIndex:number, answerValue:string):boolean {
   const storedItem = localStorage.getItem(STORAGE_KEY) 
   if (!storedItem) {
     return false
@@ -29,7 +29,7 @@ export function storeAnswer(questionIndex:number, answerIndex:number):boolean {
       return false
   }
 
-  storedObj = {...storedObj, [questionIndex]: answerIndex};
+  storedObj = {...storedObj, [questionIndex]: answerValue};
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(storedObj))
 

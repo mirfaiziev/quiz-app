@@ -1,3 +1,4 @@
+import { getFullUrl } from "@/lib/url"
 import { NextApiRequest } from "next"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
@@ -12,7 +13,7 @@ async function GET(request: NextApiRequest, context:{params:Params}) {
     value: context.params.token,
   })
 
-  redirect('/success')
+  redirect(getFullUrl('/success'))
 }
 
 export {GET}

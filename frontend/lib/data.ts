@@ -8,10 +8,12 @@ import { getQuestionSlugByIndexAndContent } from "./url";
 // interfaces
 export interface IAnswer {
   text: string
+  value: string
 }
 
 export interface IQuestion {
-  question: string,
+  title: string
+  text: string
   answers: Array<IAnswer>
 }
 
@@ -73,7 +75,7 @@ export function getDynamicParams(): Array<dynamicsParams> {
   
   Quizes.forEach((quizObj:IQuiz) => {
     quizObj.questions.forEach((questionObj:IQuestion, index:number) => {
-      params.push({quiz:quizObj.slug, question:getQuestionSlugByIndexAndContent(index,questionObj.question)})
+      params.push({quiz:quizObj.slug, question:getQuestionSlugByIndexAndContent(index,questionObj.text)})
     })
   })
 

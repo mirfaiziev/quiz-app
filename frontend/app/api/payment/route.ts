@@ -17,7 +17,7 @@ async function POST() {
     ],
     success_url: getFullUrl('/api/payment/callback/success/'+token),
     client_reference_id: token,
-    cancel_url: getFullUrl('/api/payment/callback/çcancel/'+token),
+    cancel_url: getFullUrl('/api/payment/callback/cancel/'+token),
   });
 
   return NextResponse.json({ url: session.url });

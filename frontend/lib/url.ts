@@ -39,7 +39,7 @@ export function getUrlByQuestionIndex(quiz:IQuiz, index: number) : string|null {
     return null
   }
 
-  return getQuizUrl(quiz, getQuestionSlugByIndexAndContent(index, quiz.questions[index].question))
+  return getQuizUrl(quiz, getQuestionSlugByIndexAndContent(index, quiz.questions[index].text))
 }
 
 // get the URL belongs to quiz

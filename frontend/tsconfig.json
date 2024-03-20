@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "build/types/**/*.ts"
-  ],
+, "data/quiz.ts"  ],
   "exclude": [
     "node_modules"
   ]

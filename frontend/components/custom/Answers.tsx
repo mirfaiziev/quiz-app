@@ -16,13 +16,8 @@ const Answers = ({answers, nextSlug, questionIndex}: AnswersProps) => {
 
   const onClick = (event: React.MouseEvent<HTMLElement>) => {
     const dataset = event.currentTarget.dataset
-    const answerIndex = dataset.answerIndex 
 
-    if (answerIndex === undefined) {
-      return notFound()
-    }
-
-    const storeResult = storeAnswer(questionIndex, parseInt(answerIndex))
+    const storeResult = storeAnswer(questionIndex, dataset.answerValue as string)
     if (storeResult === false) {
       console.log("cannot store result")
     }
@@ -47,6 +42,7 @@ const Answers = ({answers, nextSlug, questionIndex}: AnswersProps) => {
                   onClick={onClick}
                   data-next-slug={nextSlug}
                   data-answer-index={index}
+                  data-answer-value={answer.value}
           >{answer.text}</Button>
           <br/>
         </div>
