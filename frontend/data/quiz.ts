@@ -1,4 +1,4 @@
-import { IQuizes } from "@/lib/interfaces";
+import { IQuizes } from "@/lib/data";
 
 export const Quizes:IQuizes = [{
     default: true,

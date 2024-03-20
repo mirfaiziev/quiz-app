@@ -1,5 +1,5 @@
 import Summary from "@/components/custom/Summary";
 
-export default function FinishPage() {
+export default function SummaryPage() {
   return (<Summary />)
 }

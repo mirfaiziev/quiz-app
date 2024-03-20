@@ -1,12 +1,13 @@
 import Success from "@/components/custom/Success"
+import { cookies } from "next/headers"
 
 interface SearchParams {
   token: string
 }
 
-export default function SuccessPage({searchParams} : {searchParams: SearchParams}) {
-  // todo: get read of token in url, set it in cookie
+export default function SuccessPage() {
+  const token = cookies().get('payment-token')?.value || ''
   return (
-    <Success token={searchParams.token} />
+    <Success token={token} />
   )
 }

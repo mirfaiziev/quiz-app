@@ -1,6 +1,7 @@
 
 import {stripe} from "@/lib/payment"
 import { createPaymentLog as createPaymentLogToken } from "@/lib/paymentLog";
+import { getFullUrl } from "@/lib/url";
 import { NextResponse } from "next/server";
 
 async function POST() {
@@ -14,9 +15,9 @@ async function POST() {
         quantity: 1,
       }
     ],
-    success_url: "http://localhost:3000/success?token="+token,
-    client_reference_id: token
-   // cancel_url: "http://localhost:3000/cancel",
+    success_url: getFullUrl('/api/payment/callback/success/'+token),
+    client_reference_id: token,
+    cancel_url: getFullUrl('/api/payment/callback/çcancel/'+token),
   });
 
   return NextResponse.json({ url: session.url });

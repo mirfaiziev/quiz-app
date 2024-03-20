@@ -64,7 +64,7 @@ export function getNextQuestionSlug(quiz:IQuiz, currentQuiestionSlug: string) : 
 
   const url = getUrlByQuestionIndex(quiz, index+1)
   if (!url) {
-    return getFullUrl(getQuizUrl(quiz, process.env.APP_FINAL_ROUTE || '/'))
+    return getFullUrl(getQuizUrl(quiz, '/summary' || '/'))
   }
 
   return getFullUrl(url)
