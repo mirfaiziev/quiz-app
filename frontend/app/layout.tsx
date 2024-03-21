@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,10 @@ export default function RootLayout({
         <body className={inter.className}>
         <div className="bg-gradient-to-b from-gray-50 to-white" style={{height: "100%"}}>
             <header className="site-header relative">
+            <link rel="icon" href="/favicon.ico"/>
                 <div className="container flex flex-row justify-center">
-                <h1 className="header-h1">SelfSphere Insights</h1>
+                  <Image src={"/header/logo.webp"} alt="" width={32} height={32} className="mr-2"/>
+                  <h1 className="header-h1">SelfSphere Insights</h1>
                 </div>
             </header>
             <div className="relative isolate px-8 pt-14 sm:px-16 md:px-20 lg:px-48 ">

@@ -1,8 +1,9 @@
+import Loader from "@/components/custom/Loader"
 import Question from "@/components/custom/Question"
 import { getQuizBySlug, getDynamicParams, getQuestionBySlug, getQuestionIndexBySlug } from "@/lib/data"
 import { getNextQuestionSlug} from "@/lib/url"
 import { notFound } from "next/navigation"
-import { useEffect } from "react"
+import { Suspense } from "react"
 
 interface QuestionPageParams{
   quiz: string,
@@ -35,11 +36,13 @@ export default function QuestionPage({params}: {params: QuestionPageParams}) {
   }
 
   return (
-    <Question 
-      question={question} 
-      nextSlug={nextQuestionSlug} 
-      questionIndex={questionIndex}
-    />
+    <Suspense fallback={<Loader />}>
+      <Question 
+        question={question} 
+        nextSlug={nextQuestionSlug} 
+        questionIndex={questionIndex}
+      />
+    </Suspense>
   )
 }
 
